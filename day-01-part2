@@ -1,0 +1,57 @@
+CREATE DATABASE amazon_dev; 
+USE amazon_dev;
+
+CREATE TABLE products(
+	product_id INT NOT NULL PRIMARY KEY,
+	product_name VARCHAR(25) NOT NULL, 
+	product_price INT NOT NULL,
+	seller_name VARCHAR(25)  NOT NULL,
+	country_of_origin VARCHAR(25) NOT NULL	 
+)
+SELECT * FROM products;
+
+ALTER TABLE products
+ADD COLUMN product_category VARCHAR(25) NOT NULL
+INSERT INTO products VALUES
+(1,'iphone 13', 45000, 'ABC Retail', 'China','smartphones'),
+(2,'Samsung TV', 45000, 'XY Retail', 'South Korea','smart tv'),
+(3,'Jockey Trousers', 1400, 'Birla Retail', 'UK','clothing'),
+(4,'Black Polo T-shirt', 750, 'Tata Retail', 'UK', 'clothing'),
+(5,'Xiami Tablet', 25000, 'ABC Retail', 'China','tablets')
+
+/* clauses */ 
+/* where country is china - WHERE  */
+SELECT * FROM products WHERE country_of_origin = 'China';
+/* where country is UK and category is clothing = WHERE AND  */
+SELECT * FROM products WHERE country_of_origin = 'UK' AND product_category = 'clothing'
+/* OR Clause */
+SELECT * FROM products WHERE country_of_origin = 'UK' OR country_of_origin='china'
+
+/* BETWEEN */
+SELECT * FROM products WHERE product_price BETWEEN 750 AND 2000;
+/* Greater Than/ Less Than */ 
+SELECT * FROM products WHERE product_price < 750;
+
+/* Count */ 
+SELECT COUNT(*) FROM products WHERE country_of_origin = 'South Korea'
+
+/* LIKE */ 
+SELECT * FROM products WHERE product_name LIKE 'S%';
+
+/* DISTINCT */ 
+/* Does not select anything duplicate */
+SELECT * FROM products; 
+SELECT DISTINCT seller_name FROM products;
+SELECT DISTINCT COUNT(seller_name) FROM products;
+
+/* Sub-Query */
+SELECT COUNT(seller_name) FROM products;
+SELECT * FROM products 
+SELECT * FROM products
+WHERE product_price IN (SELECT product_price FROM products WHERE product_price = 750)
+
+SELECT * FROM products
+WHERE product_price IN (SELECT product_price FROM products WHERE country_of_origin = 'China')
+
+
+
