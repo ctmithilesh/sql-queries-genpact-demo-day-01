@@ -1,0 +1,128 @@
+CREATE DATABASE oxford_prod
+SHOW DATABASES;
+CREATE DATABASE zomato_dev; 
+SHOW TABLES;
+USE oxford_dev;
+USE zomato_dev;
+CREATE TABLE food_orders(
+	order_id INT NOT NULL PRIMARY KEY, 
+	order_item VARCHAR(25) NOT NULL, 
+	order_price INT NOT NULL, 
+	order_status VARCHAR(25) NOT NULL,
+	delivery_type VARCHAR(25) NOT NULL,
+	location VARCHAR(25) NOT NULL,
+	rating INT NOT NULL,
+	feedback VARCHAR(25) NOT NULL 
+)
+ALTER TABLE food_orders
+MODIFY COLUMN feedback VARCHAR(25)
+DESCRIBE food_orders;
+INSERT INTO food_orders VALUES
+(2, 'Pizza',350,'delivered', 'regular','delhi', NULL, NULL ),
+(3, 'Chicken Frankie',150,'delivered', 'gold','gurgaon', NULL, NULL ),
+(4, 'Veg Thali',200,'delivered', 'prime','jaipur', NULL, NULL )
+
+
+CREATE TABLE courses(
+	id INT NOT NULL PRIMARY KEY,
+	course_name VARCHAR(25) NOT NULL UNIQUE
+)
+SELECT * FROM courses;
+/* insert single item */ 
+INSERT INTO courses VALUES(100,'History')
+
+/* insert muliple items */
+INSERT INTO courses VALUES
+(2, 'Robotics'),
+(3, 'IOT'),
+(4, 'Finance')
+CREATE TABLE test(
+	test_id INT, 
+	test_name VARCHAR(25)
+)
+SELECT * FROM test
+SELECT * FROM courses;
+SELECT * FROM students;
+SELECT * FROM department;
+SELECT * FROM qualifications;
+SELECT * FROM faculty;
+SELECT * FROM food_orders;
+SELECT * FROM food_orders ORDER BY order_price ASC;
+SELECT * FROM food_orders ORDER BY order_price DESC;
+SELECT * FROM food_orders ORDER BY rating ASC;
+
+/* update rating and feedback */
+UPDATE food_orders 
+SET rating = 5
+WHERE order_id =3
+
+
+INSERT INTO test VALUES(2,'Maths paper')
+INSERT INTO test VALUES(,'Maths paper')
+CREATE TABLE students(
+	student_id INT NOT NULL PRIMARY KEY,
+	first_name VARCHAR(25) NOT NULL,
+	last_name VARCHAR(25) NOT NULL,
+	course_id INT NOT NULL, 
+	FOREIGN KEY(course_id) REFERENCES courses(id)
+)
+INSERT INTO students VALUES(1,'Amit','Kumar',4)
+
+CREATE TABLE Faculty(
+faculty_id INT NOT NULL PRIMARY KEY,
+first_name VARCHAR(25) NOT NULL,
+last_name VARCHAR(25) NOT NULL,
+course_id INT NOT NULL,
+FOREIGN KEY(course_id) REFERENCES courses(id)
+)
+DROP TABLE faculty;
+SHOW TABLES;
+CREATE TABLE department(
+id INT NOT NULL PRIMARY KEY, 
+dept_name VARCHAR(25) NOT NULL UNIQUE
+)
+INSERT INTO department VALUES
+(1, 'Computer Science'),
+(2,'Electronics'),
+(3, 'Mechanical')
+CREATE TABLE qualifications(
+id INT NOT NULL PRIMARY KEY, 
+qualifications VARCHAR(25) NOT NULL 
+)
+UPDATE department
+SET dept_name='Instrumentation'
+WHERE id=2
+DESCRIBE department;
+ALTER TABLE department
+MODIFY COLUMN id INT NOT NULL PRIMARY KEY; 
+
+/* Multiple Foreign Key */
+CREATE TABLE Faculty(
+faculty_id INT NOT NULL PRIMARY KEY,
+first_name VARCHAR(25) NOT NULL,
+last_name VARCHAR(25) NOT NULL,
+course_id INT NOT NULL,
+FOREIGN KEY(course_id) REFERENCES courses(id),
+dept_id INT NOT NULL,
+FOREIGN KEY(dept_id) REFERENCES department(id),
+qualifications INT NOT NULL, 
+FOREIGN KEY(qualifications) REFERENCES qualifications(id)  
+)
+INSERT INTO qualifications VALUES
+(2,'[BCOM, MCOM]') 
+INSERT INTO faculty VALUES
+(4,'King','Kong',2,1,2)
+
+/* Simple Inner Join */
+SELECT dept_name, course_name FROM department 
+INNER JOIN courses ON 
+department.course_id = courses.id 
+
+SELECT first_name, last_name, course_name, course_id FROM faculty
+INNER JOIN courses ON
+faculty.course_id = courses.id
+DESCRIBE department;
+DESCRIBE faculty;
+DESCRIBE courses;
+
+
